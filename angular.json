@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "medicamentos"
+    }
+  },
+  "defaultProject": "medicamentos",
+  "cli": {
+    "analytics": "3a44a7a0-4db5-4b87-ba58-dd3b30afcc55"
+  }
 }

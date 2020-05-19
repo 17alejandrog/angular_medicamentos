@@ -1,0 +1,20 @@
+<div class="animated fadeIn fast">
+    <form #formulariorpt="ngForm" name="myform"> 
+        <div class="container">
+            <div class="row">
+                <div class="col-6">
+                    <select class="custom-select form-control" id="select_rpt" name="select_rpt" required="required" [(ngModel)]="reporteData.cod_reporte">
+                        <option selected="selected" [value]=undefined>Seleccione el reporte...</option>
+                        <option [value]="1">Mejores clientes</option>
+                        <option [value]="2">Mejores empleados</option>
+                        <option [value]="3">Productos mas vendidos</option>
+                        <option [value]="4">Informe diario de ventas</option>
+                    </select>
+                </div>
+                <div class="form-group col-2">
+                    <button type="button" class="btn btn-info" [disabled]="formulariorpt.invalid" (click)="generarcsv()" id="btn_rpt">Generar</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

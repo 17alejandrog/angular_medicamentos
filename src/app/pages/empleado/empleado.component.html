@@ -1,1 +1,120 @@
-<p>empleado works!</p>
+<div class="animated fadeIn fast">
+    <div class="row">
+        <div class="col-4">
+            <form #formulario="ngForm">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="txtCedula">Cedula</label>
+                        <input type="number" class="form-control" id="txtCedula" name="cedula" placeholder="Ingrese cedula"
+                            required="required" [(ngModel)]="empleadoData.cedula" />
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="txtNombres">Nombres</label>
+                        <input type="text" class="form-control" id="txtNombre" name="nombres"
+                            placeholder="Ingrese nombres" required="required" [(ngModel)]="empleadoData.nombres" />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="txtApellidos">Apellidos</label>
+                        <input type="text" class="form-control" id="txtApellido" name="apellidos"
+                            placeholder="Ingrese apellidos" required="required" [(ngModel)]="empleadoData.apellidos" />
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="txtCorreo">Correo</label>
+                        <input type="email" class="form-control" id="txtCorreo" name="correo"
+                            placeholder="Ingrese su correo" required="required" [(ngModel)]="empleadoData.correo" />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="txtUsuario">Usuario</label>
+                        <input type="text" class="form-control" id="txtUsuario" name="usuario" placeholder="Ingrese su usuario"
+                            required="required" [(ngModel)]="empleadoData.usuario" />
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="txtPassword">Password</label>
+                        <input type="text" class="form-control" id="txtPassword" name="password"
+                            placeholder="Ingrese su password" required="required"
+                            [(ngModel)]="empleadoData.password" />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-5">
+                        <button type="button" class="btn btn-primary btn-lg" [disabled]="formulario.invalid"
+                            (click)="guardarEmpleado()">
+                            Guardar
+                        </button>
+                    </div>
+                    <div class="form-group col-md-5">
+                        <button type="button" class="btn btn-primary btn-lg"
+                            [disabled]="!this.helperService.isValidValue(empleadoData.cedula)"
+                            (click)="buscarEmpleado()">Buscar</button>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-5">
+                        <button type="button" class="btn btn-primary btn-lg"
+                            [disabled]="formulario.invalid && !this.helperService.isValidValue(empleadoData.idEmpleado)"
+                            (click)="guardarEmpleado()">
+                            Modificar
+                        </button>
+                    </div>
+                    <div class="form-group col-md-5">
+                        <button type="button" class="btn btn-primary btn-lg"
+                            [disabled]="!this.helperService.isValidValue(empleadoData.idEmpleado)"
+                            (click)="eliminarEmpleado()">
+                            Eliminar
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="col-8">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Cedula</th>
+                        <th>Nombres</th>
+                        <th>Apellidos</th>
+                        <th>Correo</th>
+                        <th>Usuario</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let empleado of empleados; index as i">
+                        <th>{{ i + 1 }}</th>
+                        <td>{{ empleado.cedula }}</td>
+                        <td>{{ empleado.nombres }}</td>
+                        <td>{{ empleado.apellidos }}</td>
+                        <td>{{ empleado.correo }}</td>
+                        <td>{{ empleado.usuario }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div id="mdlSample" class="modal fade" role="dialog"
+    [ngStyle]="{ display: helperService.modalOpen ? 'block' : 'none', opacity: 1 }">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" style="color: white;">{{ helperService.modalTitle }}</h4>
+            </div>
+            <div class="modal-body">{{ helperService.modalContent }}</div>
+
+            <div class="modal-footer">
+                <button type="button" id="btnOK" class="btn btn-success" (click)="helperService.openModal(false)">
+                    <i class="fa fa-check fa-fw"></i> Ok
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -2,27 +2,21 @@ import { NgModule, Component } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { EmpleadoComponent } from './pages/empleado/empleado.component';
-<<<<<<< HEAD
 import { InventariosComponent } from './pages/inventarios/inventarios.component';
 import { LaboratoriosComponent } from './pages/laboratorios/laboratorios.component';
-=======
 import { VentaComponent } from './pages/venta/venta.component';
 import { ReportescsvComponent } from './pages/reportescsv/reportescsv.component';
 import { ReportegraficoComponent } from './pages/reportegrafico/reportegrafico.component';
->>>>>>> 9a2abe9c5d70fd061b83af79d14f6310c4b0d40d
 
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'empleado', component: EmpleadoComponent },
-<<<<<<< HEAD
   { path: 'inventarios', component: InventariosComponent },
   { path: 'laboratorios', component: LaboratoriosComponent },
-=======
   { path: 'venta', component: VentaComponent},
   { path: 'reportescsv', component: ReportescsvComponent},
   { path: 'reportegrafico', component: ReportegraficoComponent},
->>>>>>> 9a2abe9c5d70fd061b83af79d14f6310c4b0d40d
   { path: '**', pathMatch: 'full', redirectTo: 'home' }
 ];
 

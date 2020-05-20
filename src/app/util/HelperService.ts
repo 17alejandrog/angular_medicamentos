@@ -30,6 +30,4 @@ export class HelperService {
     this.modalContent = content;
     this.modalOpen = open;
   }
-
-
 }

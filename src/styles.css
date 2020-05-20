@@ -1,1 +1,73 @@
-/* You can add global styles to this file, and also import other style files */
+@import "../node_modules/c3/c3.min.css";
+
+.main-container {
+    margin-top: 20px;
+    margin-left: 40px;
+    margin-right: 40px;
+}
+
+.espacioEntreMenus {
+    margin-right: 10px;
+}
+
+.espacioBranding {
+    margin-right: 100px !important;
+}
+
+
+/*******Animaciones*************/
+
+.animated {
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+
+.fast {
+    -webkit-animation-duration: 0.4s;
+    animation-duration: 0.4s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.fadeIn {
+    animation-name: fadeIn;
+}
+
+
+/*******MODAL*************/
+
+.modal-dialog {
+    -webkit-transform: translate(0, -50%);
+    -o-transform: translate(0, -50%);
+    transform: translate(0, -50%);
+    top: 40%;
+    margin: 0 auto;
+    width: 300px !important;
+}
+
+.modal-header {
+    background-color: #007bff;
+}
+
+.modal-content {
+    overflow: hidden;
+}
+
+.ng-hide:not(.ng-hide-animate) {
+    /* These are just alternative ways of hiding an element */
+    display: block!important;
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }

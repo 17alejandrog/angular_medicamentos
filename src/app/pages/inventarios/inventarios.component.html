@@ -1,0 +1,139 @@
+<div class="animated fadeIn fast">
+    <div class="row">
+        <div class="col-4">
+            <form #formulario="ngForm">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="inputNombreInv">Nombre</label>
+                        <input type="text" class="form-control" id="inputNombreInv" name="nombreInv"
+                            placeholder="Ingrese el nombre" required="required"
+                            [(ngModel)]="inventarioData.nombreInv" />
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="inputDescripcionInv">Descripción</label>
+                        <textarea class="form-control" style="resize: none;" id="inputDescripcionInv"
+                            name="descripcionInv" placeholder="Descripción" required="required"
+                            [(ngModel)]="inventarioData.descripcionInv"></textarea>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="inputFechaVenInv">Fecha Vencimiento</label>
+                        <input type="date" class="form-control" id="inputFechaVenInv" name="fechaVen"
+                            required="required" [(ngModel)]="inventarioData.fechaVen" />
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="inputCantidad">Cantidad</label>
+                        <input type="number" class="form-control" id="cantidadInv" name="cantidad"
+                            placeholder="Cantidad" required="required" [(ngModel)]="inventarioData.cantidad" />
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="inputFechaFabInv">Fecha Fabricación</label>
+                        <input type="date" class="form-control" id="fechaFabInv" name="fechaFab" required="required"
+                            [(ngModel)]="inventarioData.fechaFab" />
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="inputPrecio">Precio</label>
+                        <input type="number" class="form-control" id="precio" name="precio"
+                            placeholder="Ingrese el precio" required="required" [(ngModel)]="inventarioData.precio" />
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="inputEmpleado">Empleado</label>
+                        <!-- <select name="Empleado_idEmpleado" class="form-control" [(ngModel)]="inventarioData.Empleado_idEmpleado" *ngIf="inventarioData.Empleado_idEmpleado">
+                            <option selected>Seleccione...</option>
+                            <option *ngFor="let empleado of empleados">{{empleado.nombres}}</option>
+                        </select>
+ -->
+                        <select name="Empleado_idEmpleado" [(ngModel)]="inventarioData.Empleado_idEmpleado" class="form-control" (ngModelChange)="onNameChange($event)" required>
+                            <option disabled [ngValue]="undefined">Seleccione...</option>
+                            <option *ngFor="let empleado of empleados" [ngValue]="empleado">{{empleado.nombres}}</option>
+                          </select>
+                          <input type="text" [(ngModel)]="empleados" (ngModelChange)="onNameChange($event)">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="inputLaboratorio">Laboratorio</label>
+                        <select name="Laboratorio_idLaboratorio" class="form-control" [(ngModel)]="inventarioData.Laboratorio_idLaboratorio">
+                            <option selected>Seleccione...</option>
+                            <option *ngFor="let laboratorio of laboratorios">{{laboratorio.nombreLab}}</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- BOTONES AQUI -->
+            </form>
+            <div class="row" style="margin-left: 160px">
+                <div class="text-center">
+                    <button type="button" class="btn btn-primary" id="guardarInv" [disabled]="formulario.invalid"
+                        (click)="guardarInventario()">
+                        Guardar
+                    </button>
+                    <button type="button" class="btn btn-primary btn-lg"
+                        [disabled]="!this.helperService.isValidValue(inventarioData.nombreInv)"
+                        (click)="buscarInventario()">
+                        Buscar</button>
+                    <button type="button" class="btn btn-danger" id="eliminarInv"
+                        [disabled]="!this.helperService.isValidValue(inventarioData.idInventario)"
+                        (click)="eliminarInventario()">
+                        Eliminar
+                    </button>
+                    <button type="button" class="btn btn-success" id="modificarInv"
+                        [disabled]="formulario.invalid && !this.helperService.isValidValue(inventarioData.idInventario)"
+                        (click)="guardarInventario()">
+                        Modificar
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="col-8">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nombre</th>
+                        <th>Descripcion</th>
+                        <th>Fecha Vencimiento</th>
+                        <th>Cantidad</th>
+                        <th>Fecha Fabricacion</th>
+                        <th>Precio</th>
+                        <th>Empleado</th>
+                        <th>Laboratorio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let inventario of inventarios; index as i">
+                        <th>{{ i + 1 }}</th>
+                        <td>{{ inventario.nombreInv }}</td>
+                        <td>{{ inventario.descripcionInv }}</td>
+                        <td>{{ inventario.fechaVen }}</td>
+                        <td>{{ inventario.cantidad }}</td>
+                        <td>{{ inventario.fechaFab }}</td>
+                        <td>{{ inventario.precio }}</td>
+                        <td>{{ inventario.nombres }}</td>
+                        <td>{{ inventario.nombreLab }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div id="mdlSample" class="modal fade" role="dialog"
+    [ngStyle]="{ display: helperService.modalOpen ? 'block' : 'none', opacity: 1 }">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" style="color: white;">{{ helperService.modalTitle }}</h4>
+            </div>
+            <div class="modal-body">{{ helperService.modalContent }}</div>
+
+            <div class="modal-footer">
+                <button type="button" id="btnOK" class="btn btn-success" (click)="helperService.openModal(false)">
+                    <i class="fa fa-check fa-fw"></i> Ok
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,41 +1,38 @@
 import { Component, OnInit } from '@angular/core';
-import { ModelEmpleado } from 'src/app/models/empleados';
+import { ModelLaboratorio } from 'src/app/models/laboratorio';
 import { HelperService } from 'src/app/util/HelperService';
-import { EmpleadosService } from '../../services/empleados.service';
-
+import { LaboratorioService } from '../../services/laboratorios.service';
 
 @Component({
-  selector: 'app-empleado',
-  templateUrl: './empleado.component.html',
-  styleUrls: ['./empleado.component.css']
+  selector: 'app-laboratorios',
+  templateUrl: './laboratorios.component.html',
+  styleUrls: ['./laboratorios.component.css']
 })
-export class EmpleadoComponent implements OnInit {
+export class LaboratoriosComponent implements OnInit {
 
-  empleados: ModelEmpleado[] = [];
-  empleadoData = {} as ModelEmpleado;
-  
+  laboratorios: ModelLaboratorio[] = [];
+  laboratorioData = {} as ModelLaboratorio;
+
   constructor(
     public helperService: HelperService,
-    public empleadoService: EmpleadosService
+    public laboratorioService: LaboratorioService,
   ) { }
 
   ngOnInit(): void {
-    this.listarEmpleados()
+    this.listarLaboratorios();
   }
 
-  listarEmpleados() {
+  listarLaboratorios() {
     /*Se llama al metodo de listar roles definido en el servicio*/
-    this.empleadoService.listarEmpleados().subscribe(
+    this.laboratorioService.listarLaboratorios().subscribe(
       (data) => {
         let respuesta: any;
         respuesta = data;
-        console.log(respuesta);
-        
         if (respuesta.msj === "Success") {
           /*Se convierte en un objeto JSON el listado de datos obtenido*/
-          this.empleados = JSON.parse(respuesta.data);
+          this.laboratorios = JSON.parse(respuesta.data);
         } else {
-          this.empleados = [];
+          this.laboratorios = [];
         }
       },
       (error) => {
@@ -48,31 +45,27 @@ export class EmpleadoComponent implements OnInit {
     );
   }
 
-  guardarEmpleado() {
+  guardarLaboratorio() {
     /*Funcion que se encarga de almacenar la informacion del rol*/
     let postDataObj = new FormData();
-    postDataObj.append("idEmpleado", this.empleadoData.idEmpleado);
-    postDataObj.append("cedula", this.empleadoData.cedula);
-    postDataObj.append("nombres", this.empleadoData.nombres);
-    postDataObj.append("apellidos", this.empleadoData.apellidos);
-    postDataObj.append("correo", this.empleadoData.correo);
-    postDataObj.append("usuario", this.empleadoData.usuario);
+    postDataObj.append("idLaboratorio", this.laboratorioData.idLaboratorio);
+    postDataObj.append("nombreLab", this.laboratorioData.nombreLab);
+    postDataObj.append("descripcionLab", this.laboratorioData.descripcionLab);
 
-    if (this.helperService.isValidValue(this.empleadoData.idEmpleado)) {
+    if (this.helperService.isValidValue(this.laboratorioData.idLaboratorio)) {
       postDataObj.append("type", "update");
     } else {
       postDataObj.append("type", "save");
     }
 
-    this.empleadoService.guardarEmpleado(postDataObj).subscribe(
+    this.laboratorioService.guardarLaboratorio(postDataObj).subscribe(
       (data) => {
         let respuesta: any;
         respuesta = data;
-
         if (respuesta.res === "Success") {
           this.helperService.openModal(true, "Info", "Guardado exitosamente");
-          this.listarEmpleados();
-          this.limpiarEmpleado();
+          this.listarLaboratorios();
+          this.limpiarLaboratorio();
         } else {
           this.helperService.openModal(
             true,
@@ -91,19 +84,18 @@ export class EmpleadoComponent implements OnInit {
     );
   }
   
-  buscarEmpleado() {
+  buscarLaboratorio() {
     let postDataObj = new FormData();
-    postDataObj.append("cedula", this.empleadoData.cedula.toString());
+    postDataObj.append("nombreLab", this.laboratorioData.nombreLab);
     postDataObj.append("type", "search");
-    console.log("cedula", this.empleadoData.cedula.toString());
-    
-    this.empleadoService.buscarEmpleado(postDataObj).subscribe(
+    this.laboratorioService.buscarLaboratorio(postDataObj).subscribe(
       (data) => {
         let respuesta: any;
         respuesta = data;
+
         if (respuesta.msj === "Success") {
           this.helperService.openModal(true, "Info", "Encontrado exitosamente");
-          this.empleadoData = JSON.parse(respuesta.data)[0];
+          this.laboratorioData = JSON.parse(respuesta.data)[0];
         } else {
           this.helperService.openModal(true, "Info", "No se encontro");
         }
@@ -112,27 +104,29 @@ export class EmpleadoComponent implements OnInit {
         this.helperService.openModal(
           true,
           "Info",
-          "Error consumiendo el servicio"
+          "Error consumiendo el servicio"+error,
         );
       }
     );
   }
 
-  eliminarEmpleado() {
+  eliminarLaboratorio() {
     /*Funcion que se encarga de almacenar la informacion del rol*/
     let postDataObj = new FormData();
-    postDataObj.append("idEmpleado", this.empleadoData.idEmpleado);
+    postDataObj.append("idLaboratorio", this.laboratorioData.idLaboratorio);
     postDataObj.append("type", "delete");
-  
-    this.empleadoService.eliminarEmpleado(postDataObj).subscribe(
+    console.log('Eliminar');
+    console.log(this.laboratorioData.idLaboratorio);
+    
+    this.laboratorioService.eliminarLaboratorio(postDataObj).subscribe(
       (data) => {
         let respuesta: any;
         respuesta = data;
         console.log(respuesta);
         if (respuesta.res === "Success") {
           this.helperService.openModal(true, "Info", "Eliminado exitosamente");
-          this.listarEmpleados();
-          this.limpiarEmpleado();
+          this.listarLaboratorios();
+          this.limpiarLaboratorio();
         } else {
           this.helperService.openModal(
             true,
@@ -145,13 +139,14 @@ export class EmpleadoComponent implements OnInit {
         this.helperService.openModal(
           true,
           "Info",
-          "Error consumiendo el servicio"
+          "Error consumiendo el servicio" + error
         );
       }
     );
   }
 
-  limpiarEmpleado() {
-    this.empleadoData = {} as ModelEmpleado;
+  limpiarLaboratorio() {
+    this.laboratorioData = {} as ModelLaboratorio;
   }
+
 }

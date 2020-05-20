@@ -7,6 +7,11 @@
             <li class="nav-item" routerLinkActive="active">
                 <a class="nav-link" [routerLink]="['empleado']" >Empleado</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="['inventarios']" >Inventario</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="['laboratorios']" >Laboratorios</a>
             <li class="nav-item" routerLinkActive="active">
                 <a class="nav-link" [routerLink]="['venta']" >Venta</a>
             </li>
@@ -16,15 +21,6 @@
             <li class="nav-item" routerLinkActive="active">
                 <a class="nav-link" [routerLink]="['reportegrafico']" >Reporte grafico</a>
             </li>
-            <!-- <li class="nav-item">
-                <a class="nav-link" href="index.php?page=venta">Venta</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="index.php?page=reporte">Reportes CSV</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="index.php?page=reportegrafico">Reportes graficos</a>
-            </li> -->
         </ul>
     </div>
     <form class="form-inline mx-auto" name="formularioLogout" method="POST" action="controller/ctlLogin.php">

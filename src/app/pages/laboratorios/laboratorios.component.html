@@ -1,0 +1,81 @@
+<div class="animated fadeIn fast">
+    <div class="row">
+        <div class="col-4">
+            <form #formulario="ngForm">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="inputNombreLab">Nombre</label>
+                        <input type="text" class="form-control" id="nombreLab" name="nombreLab"
+                            placeholder="Ingrese el nombre" required="required"
+                            [(ngModel)]="laboratorioData.nombreLab" />
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="inputDescripcionLab">Descripción</label>
+                        <textarea class="form-control" style="resize: none;" id="descripcionLab" name="descripcionLab"
+                            placeholder="Descripción" required="required"
+                            [(ngModel)]="laboratorioData.descripcionLab"></textarea>
+                    </div>
+                </div>
+                <!-- BOTONES AQUI -->
+            </form>
+            <div class="row" style="margin-left: 160px">
+                <div class="text-center">
+                    <button type="button" class="btn btn-primary" id="guardarLab" [disabled]="formulario.invalid"
+                        (click)="guardarLaboratorio()">
+                        Guardar
+                    </button>
+                    <button type="button" class="btn btn-primary btn-lg"
+                        [disabled]="!this.helperService.isValidValue(laboratorioData.nombreLab)"
+                        (click)="buscarLaboratorio()">
+                        Buscar</button>
+                    <button type="button" class="btn btn-danger" id="eliminarLab"
+                        [disabled]="!this.helperService.isValidValue(laboratorioData.idLaboratorio)"
+                        (click)="eliminarLaboratorio()">
+                        Eliminar
+                    </button>
+                    <button type="button" class="btn btn-success" id="modificarLab"
+                        [disabled]="formulario.invalid && !this.helperService.isValidValue(laboratorioData.idLaboratorio)"
+                        (click)="guardarLaboratorio()">
+                        Modificar
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="col-8">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nombre</th>
+                        <th>Descripcion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let laboratorio of laboratorios; index as i">
+                        <th>{{ i + 1 }}</th>
+                        <td>{{ laboratorio.nombreLab }}</td>
+                        <td>{{ laboratorio.descripcionLab }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div id="mdlSample" class="modal fade" role="dialog"
+    [ngStyle]="{ display: helperService.modalOpen ? 'block' : 'none', opacity: 1 }">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" style="color: white;">{{ helperService.modalTitle }}</h4>
+            </div>
+            <div class="modal-body">{{ helperService.modalContent }}</div>
+
+            <div class="modal-footer">
+                <button type="button" id="btnOK" class="btn btn-success" (click)="helperService.openModal(false)">
+                    <i class="fa fa-check fa-fw"></i> Ok
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

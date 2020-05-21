@@ -27,6 +27,7 @@ export class ReportescsvComponent implements OnInit {
 
   generarcsv(){
     let param = {cod_rpt : this.reporteData.cod_reporte};
+    // let param = {cod_rpt : this.reporteData.cod_reporte};
     this.opentab.post(param, this.baseUrl + "reporte/gestionCSV_rpt.php");
   }
 

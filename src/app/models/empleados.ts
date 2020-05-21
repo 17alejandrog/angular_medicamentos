@@ -6,4 +6,5 @@ export interface ModelEmpleado {
     correo: string;
     usuario: string;
     password: string;
+    idTipoUsuario: string;
 }

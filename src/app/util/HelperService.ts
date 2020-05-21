@@ -24,7 +24,6 @@ export class HelperService {
     }
   }
 
-
   openModal(open: boolean, title?: string, content?: string): void {
     this.modalTitle = title;
     this.modalContent = content;

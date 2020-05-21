@@ -4,6 +4,15 @@
             <form #formulario="ngForm">
                 <div class="form-row">
                     <div class="form-group col-md-6">
+                        <label for="inputEmpleado">Tipo Usuario</label>
+                        <select name="Empleado_idEmpleado" [(ngModel)]="empleadoData.idTipoUsuario" class="form-control" required>
+                            <option disabled [ngValue]="undefined">Seleccione...</option>
+                            <option *ngFor="let tipo of tipousuarios" [ngValue]="tipo.idTipoUsuario">{{tipo.nombreTipo}}</option>
+                          </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
                         <label for="txtCedula">Cedula</label>
                         <input type="number" class="form-control" id="txtCedula" name="cedula" placeholder="Ingrese cedula"
                             required="required" [(ngModel)]="empleadoData.cedula" />
@@ -79,21 +88,26 @@
                 <thead>
                     <tr>
                         <th>#</th>
+                        <th>Tipo Usuario</th>
                         <th>Cedula</th>
                         <th>Nombres</th>
                         <th>Apellidos</th>
                         <th>Correo</th>
                         <th>Usuario</th>
+                        <th>Password</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let empleado of empleados; index as i">
                         <th>{{ i + 1 }}</th>
+                        <td *ngIf="empleado.idTipoUsuario==='1'">Administrador</td>
+                        <td *ngIf="empleado.idTipoUsuario==='2'">Empleado</td>
                         <td>{{ empleado.cedula }}</td>
                         <td>{{ empleado.nombres }}</td>
                         <td>{{ empleado.apellidos }}</td>
                         <td>{{ empleado.correo }}</td>
                         <td>{{ empleado.usuario }}</td>
+                        <td>{{ empleado.password }}</td>
                     </tr>
                 </tbody>
             </table>

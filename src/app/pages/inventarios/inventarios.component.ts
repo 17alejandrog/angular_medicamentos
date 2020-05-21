@@ -118,18 +118,8 @@ export class InventariosComponent implements OnInit {
     postDataObj.append("cantidad", this.inventarioData.cantidad);
     postDataObj.append("fechaFab", this.inventarioData.fechaFab);
     postDataObj.append("precio", this.inventarioData.precio);
-    this.empleados.forEach(element => { 
-      if (element.nombres === this.inventarioData.Empleado_idEmpleado) {
-        let id = element.idEmpleado.toString();
-        postDataObj.append("Empleado_idEmpleado", id);
-      }
-    });
-    this.laboratorios.forEach(element => { 
-      if (element.nombreLab === this.inventarioData.Laboratorio_idLaboratorio) {
-        let id = element.idLaboratorio.toString();
-        postDataObj.append("Laboratorio_idLaboratorio", id);
-      }
-    });
+    postDataObj.append("Empleado_idEmpleado", this.inventarioData.Empleado_idEmpleado);
+    postDataObj.append("Laboratorio_idLaboratorio", this.inventarioData.Laboratorio_idLaboratorio);
 
     if (this.helperService.isValidValue(this.inventarioData.idInventario)) {
       postDataObj.append("type", "update");

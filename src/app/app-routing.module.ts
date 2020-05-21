@@ -7,6 +7,7 @@ import { LaboratoriosComponent } from './pages/laboratorios/laboratorios.compone
 import { VentaComponent } from './pages/venta/venta.component';
 import { ReportescsvComponent } from './pages/reportescsv/reportescsv.component';
 import { ReportegraficoComponent } from './pages/reportegrafico/reportegrafico.component';
+import { ProveedoresComponent } from './pages/proveedores/proveedores.component';
 
 
 const routes: Routes = [
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'empleado', component: EmpleadoComponent },
   { path: 'inventarios', component: InventariosComponent },
   { path: 'laboratorios', component: LaboratoriosComponent },
+  { path: 'proveedores', component: ProveedoresComponent },
   { path: 'venta', component: VentaComponent},
   { path: 'reportescsv', component: ReportescsvComponent},
   { path: 'reportegrafico', component: ReportegraficoComponent},

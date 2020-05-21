@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ModelEmpleado } from 'src/app/models/empleados';
+import { ModelTipousuario } from 'src/app/models/tipousuario';
 import { HelperService } from 'src/app/util/HelperService';
 import { EmpleadosService } from '../../services/empleados.service';
+import { TipousuarioService } from '../../services/tipousuario.service';
 
 
 @Component({
@@ -13,26 +15,54 @@ export class EmpleadoComponent implements OnInit {
 
   empleados: ModelEmpleado[] = [];
   empleadoData = {} as ModelEmpleado;
+  tipousuarios: ModelTipousuario[] = [];
+  tipousuarioData = {} as ModelTipousuario;
   
   constructor(
     public helperService: HelperService,
-    public empleadoService: EmpleadosService
+    public empleadoService: EmpleadosService,
+    public tipousuarioService: TipousuarioService
   ) { }
 
   ngOnInit(): void {
-    this.listarEmpleados()
+    this.listarEmpleados();
+    this.listarTiposUsuario();
   }
 
-  listarEmpleados() {
+  listarTiposUsuario() {
     /*Se llama al metodo de listar roles definido en el servicio*/
-    this.empleadoService.listarEmpleados().subscribe(
+    this.tipousuarioService.listarTiposUsuarios().subscribe(
       (data) => {
         let respuesta: any;
         respuesta = data;
-        console.log(respuesta);
-        
+        console.log('Tipos'+respuesta);
         if (respuesta.msj === "Success") {
           /*Se convierte en un objeto JSON el listado de datos obtenido*/
+          this.tipousuarios = JSON.parse(respuesta.data);
+        } else {
+          this.tipousuarios = [];
+        }
+      },
+      (error) => {
+        this.helperService.openModal(
+          true,
+          "Info",
+          "Error consumiendo el servicio"
+          );
+        }
+        );
+      }
+      
+      listarEmpleados() {
+        /*Se llama al metodo de listar roles definido en el servicio*/
+        this.empleadoService.listarEmpleados().subscribe(
+          (data) => {
+            let respuesta: any;
+            respuesta = data;
+            console.log('Tipos'+respuesta);
+        if (respuesta.msj === "Success") {
+          /*Se convierte en un objeto JSON el listado de datos obtenido*/
+          console.log(JSON.parse(respuesta.data));
           this.empleados = JSON.parse(respuesta.data);
         } else {
           this.empleados = [];
@@ -57,6 +87,8 @@ export class EmpleadoComponent implements OnInit {
     postDataObj.append("apellidos", this.empleadoData.apellidos);
     postDataObj.append("correo", this.empleadoData.correo);
     postDataObj.append("usuario", this.empleadoData.usuario);
+    postDataObj.append("password", this.empleadoData.password);
+    postDataObj.append("idTipoUsuario", this.empleadoData.idTipoUsuario);
 
     if (this.helperService.isValidValue(this.empleadoData.idEmpleado)) {
       postDataObj.append("type", "update");

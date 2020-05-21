@@ -43,22 +43,16 @@
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="inputEmpleado">Empleado</label>
-                        <!-- <select name="Empleado_idEmpleado" class="form-control" [(ngModel)]="inventarioData.Empleado_idEmpleado" *ngIf="inventarioData.Empleado_idEmpleado">
-                            <option selected>Seleccione...</option>
-                            <option *ngFor="let empleado of empleados">{{empleado.nombres}}</option>
-                        </select>
- -->
-                        <select name="Empleado_idEmpleado" [(ngModel)]="inventarioData.Empleado_idEmpleado" class="form-control" (ngModelChange)="onNameChange($event)" required>
+                        <select name="Empleado_idEmpleado" [(ngModel)]="inventarioData.Empleado_idEmpleado" class="form-control" required>
                             <option disabled [ngValue]="undefined">Seleccione...</option>
-                            <option *ngFor="let empleado of empleados" [ngValue]="empleado">{{empleado.nombres}}</option>
+                            <option *ngFor="let empleado of empleados" [ngValue]="empleado.idEmpleado">{{empleado.nombres}}</option>
                           </select>
-                          <input type="text" [(ngModel)]="empleados" (ngModelChange)="onNameChange($event)">
                     </div>
                     <div class="form-group col-md-6">
                         <label for="inputLaboratorio">Laboratorio</label>
                         <select name="Laboratorio_idLaboratorio" class="form-control" [(ngModel)]="inventarioData.Laboratorio_idLaboratorio">
-                            <option selected>Seleccione...</option>
-                            <option *ngFor="let laboratorio of laboratorios">{{laboratorio.nombreLab}}</option>
+                            <option disabled [ngValue]="undefined">Seleccione...</option>
+                            <option *ngFor="let laboratorio of laboratorios" [ngValue]="laboratorio.idLaboratorio">{{laboratorio.nombreLab}}</option>
                         </select>
                     </div>
                 </div>

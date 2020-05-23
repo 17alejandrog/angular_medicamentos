@@ -8,6 +8,7 @@ import { VentaComponent } from './pages/venta/venta.component';
 import { ReportescsvComponent } from './pages/reportescsv/reportescsv.component';
 import { ReportegraficoComponent } from './pages/reportegrafico/reportegrafico.component';
 import { ProveedoresComponent } from './pages/proveedores/proveedores.component';
+import { EstanteriaComponent } from './pages/estanteria/estanteria.component';
 
 
 const routes: Routes = [
@@ -19,6 +20,7 @@ const routes: Routes = [
   { path: 'venta', component: VentaComponent},
   { path: 'reportescsv', component: ReportescsvComponent},
   { path: 'reportegrafico', component: ReportegraficoComponent},
+  { path: 'estanteria', component: EstanteriaComponent},
   { path: '**', pathMatch: 'full', redirectTo: 'home' }
 ];
 

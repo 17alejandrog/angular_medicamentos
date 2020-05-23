@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="col-6">
                     <select class="custom-select form-control" id="select_rpt" name="select_rpt" required="required" [(ngModel)]="reporteData.cod_reporte">
-                        <option selected="selected" [value]=undefined>Seleccione el reporte...</option>
+                        <option selected="selected" [ngValue]="undefined">Seleccione el reporte...</option>
                         <option [value]="1">Distribución segun el género</option>
                         <option [value]="2">Distribución de cantidad de medicamentos </option>
                         <option [value]="3">Cantidad vendida por producto </option>
@@ -28,5 +28,22 @@
             </div>
         </div>
         <div id="div_chart"></div>
+    </div>
+</div>
+<div id="mdlSample" class="modal fade" role="dialog"
+    [ngStyle]="{ display: helperService.modalOpen ? 'block' : 'none', opacity: 1 }">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" style="color: white;">{{ helperService.modalTitle }}</h4>
+            </div>
+            <div class="modal-body">{{ helperService.modalContent }}</div>
+
+            <div class="modal-footer">
+                <button type="button" id="btnOK" class="btn btn-success" (click)="helperService.openModal(false)">
+                    <i class="fa fa-check fa-fw"></i> Ok
+                </button>
+            </div>
+        </div>
     </div>
 </div>

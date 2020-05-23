@@ -1,0 +1,85 @@
+<div class="animated fadeIn fast">
+    <div class="row">
+        <div class="col-4">
+            <form #formulario="ngForm" autocomplete="off">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label>Nombre</label>
+                        <input type="text" class="form-control" name="nombre" required="required"
+                            placeholder="Ingrese el nombre" required="required" [(ngModel)]="estanteriaData.nombre" />
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>Descripción</label>
+                        <input type="text" class="form-control" name="descripcion" required="required"
+                            placeholder="Descripción" [(ngModel)]="estanteriaData.descripcion">
+                    </div>
+                </div>
+                <!-- BOTONES AQUI -->
+            </form>
+            <div class="row">
+                <div class="col-3">
+                    <button type="button" class="btn btn-primary" [disabled]="formulario.invalid"
+                        (click)="guardarEstanteria()">
+                        Guardar
+                    </button>
+                </div>
+                <div class="col-3">
+                    <button type="button" class="btn btn-primary"
+                        [disabled]="!this.helperService.isValidValue(estanteriaData.nombre)"
+                        (click)="buscarEstanteria()">
+                        Buscar</button>
+                </div>
+                <div class="col-3">
+                    <button type="button" class="btn btn-danger"
+                        [disabled]="!this.helperService.isValidValue(estanteriaData.idEstanteria)"
+                        (click)="eliminarEstanteria()">
+                        Eliminar
+                    </button>
+                </div>
+                <div class="col-3">
+                    <button type="button" class="btn btn-success"
+                        [disabled]="formulario.invalid && !this.helperService.isValidValue(estanteriaData.idEstanteria)"
+                        (click)="guardarEstanteria()">
+                        Modificar
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="col-8">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nombre</th>
+                        <th>Descripcion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let estanteria of estanterias; index as i">
+                        <th>{{ i + 1 }}</th>
+                        <td>{{ estanteria.nombre }}</td>
+                        <td>{{ estanteria.descripcion }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div id="mdlSample" class="modal fade" role="dialog"
+    [ngStyle]="{ display: helperService.modalOpen ? 'block' : 'none', opacity: 1 }">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" style="color: white;">{{ helperService.modalTitle }}</h4>
+            </div>
+            <div class="modal-body">{{ helperService.modalContent }}</div>
+
+            <div class="modal-footer">
+                <button type="button" id="btnOK" class="btn btn-success" (click)="helperService.openModal(false)">
+                    <i class="fa fa-check fa-fw"></i> Ok
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -6,6 +6,8 @@ import { EmpleadosService } from '../../services/empleados.service';
 import { ModelEmpleado } from 'src/app/models/empleados';
 import { LaboratorioService } from '../../services/laboratorios.service';
 import { ModelLaboratorio } from 'src/app/models/laboratorio';
+import { EstanteriaService } from '../../services/estanteria.service';
+import { ModelEstanteria } from '../../models/estanteria';
 
 @Component({
   selector: 'app-inventarios',
@@ -18,22 +20,48 @@ export class InventariosComponent implements OnInit {
   inventarioData = {} as ModelInventario;
   empleados: ModelEmpleado[] = [];
   laboratorios: ModelLaboratorio[] = [];
+  estanterias : ModelEstanteria[] = [];
+  estanteriasData = {} as ModelEstanteria;
 
   constructor(
     public helperService: HelperService,
     public inventarioService: InventarioService,
     public empleadoService: EmpleadosService,
-    public laboratorioService: LaboratorioService
+    public laboratorioService: LaboratorioService,
+    public estanteriaService : EstanteriaService
   ) { }
 
   ngOnInit(): void {
     this.listarInventarios();
     this.listarEmpleadosSelect();
     this.listarLaboratoriosSelect();
+    this.listarEstanteriasSelect();
   }
 
   onNameChange($event) {
     let idInv = this.inventarioData.idInventario;
+  }
+
+  listarEstanteriasSelect(){
+    this.estanteriaService.listarEstanterias().subscribe(
+      (data) => {
+        let respuesta: any;
+        respuesta = data;
+        if (respuesta.msj === "Success") {
+          /*Se convierte en un objeto JSON el listado de datos obtenido*/
+          this.estanterias = JSON.parse(respuesta.data);
+        } else {
+          this.estanterias = [];
+        }
+      },
+      (error) => {
+        this.helperService.openModal(
+          true,
+          "Info",
+          "Error consumiendo el servicio"
+        );
+      }
+    );
   }
   
   listarEmpleadosSelect() {
@@ -120,6 +148,7 @@ export class InventariosComponent implements OnInit {
     postDataObj.append("precio", this.inventarioData.precio);
     postDataObj.append("Empleado_idEmpleado", this.inventarioData.Empleado_idEmpleado);
     postDataObj.append("Laboratorio_idLaboratorio", this.inventarioData.Laboratorio_idLaboratorio);
+    postDataObj.append("estanteria", this.inventarioData.idEstanteria);
 
     if (this.helperService.isValidValue(this.inventarioData.idInventario)) {
       postDataObj.append("type", "update");

@@ -16,6 +16,7 @@ import { ReportescsvComponent } from './pages/reportescsv/reportescsv.component'
 import { RedirectService } from './services/redirect.service';
 import { ReportegraficoComponent } from './pages/reportegrafico/reportegrafico.component';
 import { ProveedoresComponent } from './pages/proveedores/proveedores.component';
+import { EstanteriaComponent } from './pages/estanteria/estanteria.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { ProveedoresComponent } from './pages/proveedores/proveedores.component'
     VentaComponent,
     ReportescsvComponent,
     ReportegraficoComponent,
-    ProveedoresComponent
+    ProveedoresComponent,
+    EstanteriaComponent
   ],
   imports: [
     BrowserModule,

@@ -8,4 +8,5 @@ export interface ModelInventario {
     precio: string;
     Empleado_idEmpleado: string;
     Laboratorio_idLaboratorio: string;
+    idEstanteria: string;
 }

@@ -66,14 +66,14 @@
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-5">
-                        <button type="button" class="btn btn-primary btn-lg"
+                        <button type="button" class="btn btn-success btn-lg"
                             [disabled]="formulario.invalid && !this.helperService.isValidValue(empleadoData.idEmpleado)"
                             (click)="guardarEmpleado()">
                             Modificar
                         </button>
                     </div>
                     <div class="form-group col-md-5">
-                        <button type="button" class="btn btn-primary btn-lg"
+                        <button type="button" class="btn btn-danger btn-lg"
                             [disabled]="!this.helperService.isValidValue(empleadoData.idEmpleado)"
                             (click)="eliminarEmpleado()">
                             Eliminar

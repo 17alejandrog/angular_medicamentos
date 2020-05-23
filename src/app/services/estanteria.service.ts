@@ -27,5 +27,10 @@ export class EstanteriaService {
     const url = this.baseUrl + "controller/ctlEstanteria.php";
     return this.http.post<any>(url, postData);
   }
+
+  eliminarEstanteria(postData: any){
+    const url = this.baseUrl + "controller/ctlEstanteria.php";
+    return this.http.post<any>(url, postData);
+  }
   
 }

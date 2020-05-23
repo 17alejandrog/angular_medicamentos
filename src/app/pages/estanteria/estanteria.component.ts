@@ -111,7 +111,37 @@ export class EstanteriaComponent implements OnInit {
   }
 
   eliminarEstanteria(){
-
+    let postDataObj = new FormData();
+    postDataObj.append("idEstanteria", this.estanteriaData.idEstanteria);
+    postDataObj.append("type", "delete");
+    console.log('Eliminar');
+    console.log(this.estanteriaData.idEstanteria);
+    
+    this.estanteriaService.eliminarEstanteria(postDataObj).subscribe(
+      (data) => {
+        let respuesta: any;
+        respuesta = data;
+        console.log(respuesta);
+        if (respuesta.res === "Success") {
+          this.helperService.openModal(true, "Info", "Eliminado exitosamente");
+          this.listarEstanteria();
+          this.limpiarEstanteria();
+        } else {
+          this.helperService.openModal(
+            true,
+            "Info",
+            "No se encontro el registro a eliminar"
+          );
+        }
+      },
+      (error) => {
+        this.helperService.openModal(
+          true,
+          "Info",
+          "Error consumiendo el servicio" + error
+        );
+      }
+    );
   }
 
 

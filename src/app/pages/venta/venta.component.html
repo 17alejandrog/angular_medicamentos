@@ -13,7 +13,8 @@
                     </thead>
                     <tbody id="body_medicamentos">
                         <ng-container *ngFor="let producto of productos">
-                            <tr *ngIf="producto.cantidad > 0">
+                            <tr *ngIf="producto.cantidad > 0"
+                                (click)="agrega(producto.idInventario,producto.nombreInv,producto.cantidad,producto.precio)">
                                 <td>{{producto.nombreInv}}</td>
                                 <td>{{producto.nombreLab}}</td>
                                 <td>{{producto.cantidad}}</td>
@@ -43,28 +44,36 @@
                                 </tr>
                             </thead>
                             <tbody id="body_venta">
+                                <tr *ngFor="let produ of productosventa; index as i">
+                                    <td>{{produ.nombreInv}}</td>
+                                    <td><input type='number' onkeydown='return false' [(ngModel)]="produ.cantidad"
+                                            min='1' max='{{produ.cantidadMax}}' (click)="actu_total()"></td>
+                                    <td>{{produ.cantidad*produ.precio}}</td>
+                                    <td><button class='btn btn-danger btn-sm' type='button' (click)="elimina(i)"> X
+                                        </button></td>
+                                </tr>
                             </tbody>
                             <tfoot class="bg-primary">
                                 <td colspan="2"><b>Total</b></td>
-                                <td id="total_venta"><b>0</b></td>
+                                <td id="total_venta"><b>{{totalventa}}</b></td>
                                 <td></td>
                             </tfoot>
                         </table>
                         <br>
                         <div class="row">
-                            <div class="col-10">
-                                <select id="cliente" class="form-control">
-                                    <option value="" disabled selected>Seleccione el cliente</option>
+                            <div class="col-12">
+                                <select id="cliente" [(ngModel)]="idCliente" class="form-control" required="required">
+                                    <option disabled [ngValue]="undefined" selected>Seleccione el cliente</option>
+                                    <option *ngFor="let cliente of clientes" [ngValue]="cliente.idCliente">
+                                        {{cliente.nombres}} {{cliente.apellidos}}</option>
                                 </select>
-                            </div>
-                            <div class="col-1">
-                                <button type="button" class="btn btn-primary" id="agrega_cliente"> + </button>
                             </div>
                         </div>
                         <br>
                         <div class="row text-center">
                             <div class="col-12">
-                                <button type="button" class="btn btn-primary" id="vender">Finalizar venta</button>
+                                <button type="button" (click)="vender()" class="btn btn-primary" id="vender">Finalizar
+                                    venta</button>
                             </div>
                         </div>
                     </div>
@@ -73,73 +82,56 @@
         </div>
     </div>
     <div class="col-1">
-        <button class="btn btn-danger mr-auto" id="ventas_realizadas">Ventas realizadas</button>
+        <button type="button" class="btn btn-danger mr-auto" data-toggle="modal" data-target="#dialog_venta"
+            id="ventas_realizadas">Ventas realizadas</button>
     </div>
 </div>
-<div id="dialog_cliente"  >
-    <form id="form_cliente">
-        <div class="row">
-            <div class="col-6">
-                <input type="text" required id="nombres" class="form-control" placeholder="Nombres">
+<div id="dialog_venta" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ventas realizadas</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <div class="col-6">
-                <input type="text" required id="apellidos" class="form-control" placeholder="Apellidos">
+            <div class="modal-body">
+                <table id="tbl_ventas" class="table table-condensed">
+                    <thead class="bg-primary">
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Valor total</th>
+                            <th>Cliente</th>
+                            <th>Vendedor</th>
+                        </tr>
+                    </thead>
+                    <tbody id="body_ventas">
+                        <tr *ngFor="let ven of ventas">
+                            <td>{{ven.fecha}}</td>
+                            <td>{{ven.valor}}</td>
+                            <td>{{ven.cliente}}</td>
+                            <td>{{ven.vendedor}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="row" hidden="hidden">
+                    <div class="col-2">
+                        <form name="formPDF" method="post" action="./reporte/gestionPDF.php" target="_blank">
+                            <input type="hidden" name="nombre" value="venta">
+                            <input type="hidden" name="nombre_rpt" value="VENTAS">
+                            <input type="submit" class="btn btn-info" value="Generar PDF">
+                        </form>
+                    </div>
+                    <div class="col-3">
+                        <button type="button" class="btn btn-info" id="rpt_csv_venta">Generar CSV</button>
+                    </div>
+                </div>
             </div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="col-6">
-                <input type="number" id="cedula" required style="-webkit-appearance: none;" class="form-control" placeholder="Cedula">
-            </div>
-            <div class="col-6">
-                <select id="genero" required class="form-control">
-                    <option value="" disabled selected>Seleccione el género</option>
-                    <option value="Femenino">Femenino</option>
-                    <option value="Masculino">Masculino</option>
-                </select>
-            </div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="col-6">
-                <input type="number" id="edad" required style="-webkit-appearance: none;" class="form-control" placeholder="Edad" min="8">
-            </div>
-            <div class="col-6">
-                <button type="submit" class="btn btn-primary">Guardar</button>
-                <button type="button" class="btn btn-primary" id="rpt_csv_cliente">CSV</button>
-                <button type="button" id="btn_pdf_cliente" class="btn btn-primary" id="rpt_csv_cliente">PDF</button>
-            </div>
-        </div>
-    </form>
-</div>
-<div id="dialog_venta"  >
-    <table id="tbl_ventas" class="table table-condensed">
-        <thead class="bg-primary">
-            <tr>
-                <th>Fecha</th>
-                <th>Valor total</th>
-                <th>Cliente</th>
-                <th>Vendedor</th>
-            </tr>
-        </thead>
-        <tbody id="body_ventas">
-
-        </tbody>
-    </table>
-    <div class="row">
-        <div class="col-2">
-            <form name="formPDF" method="post" action="./reporte/gestionPDF.php" target="_blank">
-                <input type="hidden" name="nombre" value="venta">
-                <input type="hidden" name="nombre_rpt" value="VENTAS">
-                <input type="submit" class="btn btn-info" value="Generar PDF">
-            </form>
-        </div>
-        <div class="col-3">
-            <button type="button" class="btn btn-info" id="rpt_csv_venta">Generar CSV</button>
         </div>
     </div>
 </div>
-<div id="div_rpt_detalle"  >
+<div id="div_rpt_detalle" hidden="hidden">
     <form name="formPDF" id="formDetalle" method="post" action="./reporte/gestionPDF.php" target="_blank">
         <input type="hidden" name="rpt" value="detalle">
         <input type="hidden" name="vwhere" id="vwhere" value="">
@@ -148,7 +140,7 @@
         <input type="submit" value="Generar PDF">
     </form>
 </div>
-<div id="dialog_venta_csv"  >
+<div id="dialog_venta_csv" hidden="hidden">
     <div class="col-3">
         <form name="formCSV_emp1" method="post" action="./reporte/gestionCSV.php" target="_blank">
             <input type="hidden" name="separator" value=",">
@@ -166,7 +158,7 @@
         </form>
     </div>
 </div>
-<div id="dialog_cliente_csv" class="row modal fade ng-hide" [ngStyle]="{ display: helperService.modalOpen ? 'block' : 'none', opacity: 1 } " role="dialog">
+<div id="dialog_cliente_csv" class="row modal fade ng-hide" hidden="hidden">
     <div class="col-3">
         <form name="formCSV_emp1" method="post" action="./reporte/gestionCSV.php" target="_blank">
             <input type="hidden" name="separator" value=",">
@@ -184,10 +176,29 @@
         </form>
     </div>
 </div>
-<div [ngStyle]="{ display: helperService.modalOpen ? 'block' : 'none', opacity: 1 } " class="modal fade ng-hide" role="dialog">
+<div [ngStyle]="{ display: helperService.modalOpen ? 'block' : 'none', opacity: 1 } " class="modal fade ng-hide"
+    role="dialog">
     <form id="form_pdf_cliente" name="formPDF" method="post" action="./reporte/gestionPDF.php" target="_blank">
         <input type="hidden" name="nombre" value="cliente">
         <input type="hidden" name="nombre_rpt" value="CLIENTES">
         <input type="submit" class="btn btn-primary" value="PDF">
     </form>
+</div>
+
+<div id="mdlSample" class="modal fade" role="dialog"
+    [ngStyle]="{ display: helperService.modalOpen ? 'block' : 'none', opacity: 1 }">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" style="color: white;">{{ helperService.modalTitle }}</h4>
+            </div>
+            <div class="modal-body">{{ helperService.modalContent }}</div>
+
+            <div class="modal-footer">
+                <button type="button" id="btnOK" class="btn btn-success" (click)="helperService.openModal(false)">
+                    <i class="fa fa-check fa-fw"></i> Ok
+                </button>
+            </div>
+        </div>
+    </div>
 </div>

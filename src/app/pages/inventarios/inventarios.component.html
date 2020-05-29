@@ -50,7 +50,7 @@
                     </div>
                     <div class="form-group col-md-6">
                         <label for="inputLaboratorio">Laboratorio</label>
-                        <select name="Laboratorio_idLaboratorio" class="form-control" [(ngModel)]="inventarioData.Laboratorio_idLaboratorio">
+                        <select name="Laboratorio_idLaboratorio" class="form-control" [(ngModel)]="inventarioData.Laboratorio_idLaboratorio" required>
                             <option disabled [ngValue]="undefined">Seleccione...</option>
                             <option *ngFor="let laboratorio of laboratorios" [ngValue]="laboratorio.idLaboratorio">{{laboratorio.nombreLab}}</option>
                         </select>
@@ -59,7 +59,7 @@
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label>Estanteria</label>
-                        <select name="estanteria" [(ngModel)]="inventarioData.idEstanteria" class="form-control" required>
+                        <select name="estanteria"  class="form-control" [(ngModel)]="inventarioData.idEstanteria" class="form-control" required>
                             <option disabled [ngValue]="undefined">Seleccione...</option>
                             <option *ngFor="let estanteria of estanterias" [ngValue]="estanteria.idEstanteria">{{estanteria.nombre}}</option>
                           </select>

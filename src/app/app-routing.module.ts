@@ -9,11 +9,13 @@ import { ReportescsvComponent } from './pages/reportescsv/reportescsv.component'
 import { ReportegraficoComponent } from './pages/reportegrafico/reportegrafico.component';
 import { ProveedoresComponent } from './pages/proveedores/proveedores.component';
 import { EstanteriaComponent } from './pages/estanteria/estanteria.component';
+import { ClienteComponent } from './pages/cliente/cliente.component';
 
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'empleado', component: EmpleadoComponent },
+  { path: 'cliente', component: ClienteComponent },
   { path: 'inventarios', component: InventariosComponent },
   { path: 'laboratorios', component: LaboratoriosComponent },
   { path: 'proveedores', component: ProveedoresComponent },

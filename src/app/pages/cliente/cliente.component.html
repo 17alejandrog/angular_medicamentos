@@ -1,0 +1,119 @@
+<div class="animated fadeIn fast">
+    <div class="row">
+        <div class="col-4">
+            <form #formulario="ngForm">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="txtCedula">Cedula</label>
+                        <input type="number" class="form-control" id="txtCedula" name="cedula"
+                            placeholder="Ingrese su cedula" required="required" [(ngModel)]="clienteData.cedula" />
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="txtNombres">Nombres</label>
+                        <input type="text" class="form-control" id="txtNombre" name="nombres"
+                            placeholder="Ingrese nombres" required="required" [(ngModel)]="clienteData.nombres" />
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="txtApellidos">Apellidos</label>
+                        <input type="text" class="form-control" id="txtApellido" name="apellidos"
+                            placeholder="Ingrese apellidos" required="required" [(ngModel)]="clienteData.apellidos" />
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="inputGenero">Genero</label>
+                        <select name="cliente_idcliente" [(ngModel)]="clienteData.genero" class="form-control" required>
+                            <option disabled [ngValue]="undefined">Seleccione...</option>
+                            <option [ngValue]="1">Hombre</option>
+                            <option [ngValue]="2">Mujer</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="txtEdad">Edad</label>
+                        <input type="number" class="form-control" id="txtEdad" name="edad" placeholder="Ingrese su edad"
+                            required="required" [(ngModel)]="clienteData.edad" />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-5">
+                        <button type="button" class="btn btn-primary btn-lg" [disabled]="formulario.invalid"
+                            (click)="guardarCliente()">
+                            Guardar
+                        </button>
+                    </div>
+                    <div class="form-group col-md-5">
+                        <button type="button" class="btn btn-primary btn-lg"
+                            [disabled]="!this.helperService.isValidValue(clienteData.cedula)"
+                            (click)="buscarCliente()">Buscar</button>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-5">
+                        <button type="button" class="btn btn-success btn-lg"
+                            [disabled]="formulario.invalid && !this.helperService.isValidValue(clienteData.idCliente)"
+                            (click)="guardarCliente()">
+                            Modificar
+                        </button>
+                    </div>
+                    <div class="form-group col-md-5">
+                        <button type="button" class="btn btn-danger btn-lg"
+                            [disabled]="!this.helperService.isValidValue(clienteData.idCliente)"
+                            (click)="eliminarCliente()">
+                            Eliminar
+                        </button>
+                    </div>
+                </div>
+                <div class="form-group col-md-5">
+                    <div style="margin-left: 4px;">
+                        <button type="button" class="btn btn-info" (click)="generarPDFClientes('CLIENTES','cliente')" id="btn_rpt">Generar PDF</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-8">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nombre</th>
+                        <th>Apellidos</th>
+                        <th>Cedula</th>
+                        <th>Genero</th>
+                        <th>Edad</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let cliente of clientes; index as i">
+                        <th>{{ i + 1 }}</th>
+                        <td>{{ cliente.nombres }}</td>
+                        <td>{{ cliente.apellidos }}</td>
+                        <td>{{ cliente.cedula }}</td>
+                        <td *ngIf="cliente.genero==='1'">Hombre</td>
+                        <td *ngIf="cliente.genero==='2'">Mujer</td>
+                        <td>{{ cliente.edad }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div id="mdlSample" class="modal fade" role="dialog"
+    [ngStyle]="{ display: helperService.modalOpen ? 'block' : 'none', opacity: 1 }">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" style="color: white;">{{ helperService.modalTitle }}</h4>
+            </div>
+            <div class="modal-body">{{ helperService.modalContent }}</div>
+
+            <div class="modal-footer">
+                <button type="button" id="btnOK" class="btn btn-success" (click)="helperService.openModal(false)">
+                    <i class="fa fa-check fa-fw"></i> Ok
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
